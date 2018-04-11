@@ -52,24 +52,24 @@ class ASide extends React.Component {
           <ul className="sidebar-menu" ref='sidebarmenu'>
             <li className="header">Menu</li>
             {
-              this.state.menuItems.map(item => {
+              this.state.menuItems.map((item, index) => {
                 if (item.items && item.items.length > 0) {
                   return (
-                    <li className={`treeview ${this.props.menu == item.id ? 'menu-open' : ''}`}>
+                    <li key={index} className={`treeview ${this.props.menu == item.id ? 'menu-open' : ''}`}>
                       <a href="#">
                         <i className={item.class}></i> <span>{item.name}</span>
                       </a>
                       <ul className="treeview-menu" style={{display: `${this.props.menu == item.id ? 'block': 'none'}`}}>
                         {
-                          item.items.map(subMenuItem => {
-                            return <MenuItem to={subMenuItem.link} label={subMenuItem.name}/>
+                          item.items.map((subMenuItem, subIndex) => {
+                            return <MenuItem key={subIndex} to={subMenuItem.link} label={subMenuItem.name}/>
                           })
                         }
                       </ul>
                     </li>
                   )
                 } else {
-                  return <MenuItem to={item.link} label={item.name}/>
+                  return <MenuItem key={index} to={item.link} label={item.name}/>
                 }
               })
             }
