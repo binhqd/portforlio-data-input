@@ -3,6 +3,24 @@ import {MainLayout} from 'components/layouts';
 import {toastr} from 'react-redux-toastr';
 import { withRouter } from 'react-router-dom';
 
+import Form from 'react-jsonschema-form';
+
+const schema = {
+  title: 'Add new position',
+  type: 'object',
+  required: ['title'],
+  properties: {
+    title: {type: 'string', title: 'Position Title', default: ''},
+    company: {type: 'string', title: 'Company', default: ''},
+    from: {type: 'string', title: 'From:', default: '', 'ui:widget': 'date'},
+    to: {type: 'string', title: 'To', default: '', 'ui:widget': 'date'},
+    description: {type: 'string', title: 'Description', default: '', 'ui:widget': 'date'},
+    location: {type: 'string', title: 'Location', default: ''}
+  }
+};
+
+const log = (type) => console.log.bind(console, type);
+
 class EditPosition extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -20,7 +38,13 @@ class EditPosition extends React.Component {
     return (
       <MainLayout>
         <div>
-          Edit Position
+          <h2>Edit Position</h2>
+          <Form
+            onChange={log('changed')}
+            onError={log('errors')}
+            onSubmit={log('submitted')}
+            schema={schema}
+          />
         </div>
       </MainLayout>
     );

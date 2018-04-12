@@ -3,6 +3,20 @@ import {MainLayout} from 'components/layouts';
 import {toastr} from 'react-redux-toastr';
 import { withRouter } from 'react-router-dom';
 
+import Form from 'react-jsonschema-form';
+
+const schema = {
+  title: 'Add new skill',
+  type: 'object',
+  required: ['name'],
+  properties: {
+    name: {type: 'string', title: 'Skill name', default: ''},
+    rating: {type: 'number', title: 'Rating (1-5)', default: 0}
+  }
+};
+
+const log = (type) => console.log.bind(console, type);
+
 class EditSkill extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -20,7 +34,13 @@ class EditSkill extends React.Component {
     return (
       <MainLayout>
         <div>
-          Edit Skill
+          <h2>Edit Skill</h2>
+          <Form
+            onChange={log('changed')}
+            onError={log('errors')}
+            onSubmit={log('submitted')}
+            schema={schema}
+          />
         </div>
       </MainLayout>
     );

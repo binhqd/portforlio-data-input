@@ -5,6 +5,20 @@ import {Categories} from 'base/api';
 import {toastr} from 'react-redux-toastr';
 import { withRouter } from 'react-router-dom';
 
+import Form from 'react-jsonschema-form';
+
+const schema = {
+  title: 'Add new skill',
+  type: 'object',
+  required: ['name'],
+  properties: {
+    name: {type: 'string', title: 'Skill name', default: ''},
+    rating: {type: 'number', title: 'Rating (1-5)', default: 0}
+  }
+};
+
+const log = (type) => console.log.bind(console, type);
+
 class AddSkill extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -21,7 +35,13 @@ class AddSkill extends React.Component {
     return (
       <MainLayout>
         <div>
-          Add new skill
+          <h2>Add new skill</h2>
+          <Form
+            onChange={log('changed')}
+            onError={log('errors')}
+            onSubmit={log('submitted')}
+            schema={schema}
+          />
         </div>
       </MainLayout>
     );
